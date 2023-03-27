@@ -1,0 +1,11 @@
+Write an EXECUTIVE SUMMARY of the following conversation followed by a list of DETAILED NOTES as a bullet list of complete sentences. Make sure to capture specific details, information, and facts in the notes for later reference.
+
+
+
+
+<<INPUT>>
+
+
+
+
+EXECUTIVE SUMMARY:
