@@ -1,0 +1,1 @@
+Correct, REMO is actually biomimetic or neuro-inspired. Would you like to know how it works? In fact, what we're doing right now is building up a baseline dataset to test it against. 
