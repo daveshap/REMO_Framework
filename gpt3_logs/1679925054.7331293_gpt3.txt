@@ -1,0 +1,24 @@
+Write an EXECUTIVE SUMMARY of the following conversation followed by a list of DETAILED NOTES as a bullet list of complete sentences. Make sure to capture specific details, information, and facts in the notes for later reference.
+
+
+
+
+USER: hello raven, how are you?
+RAVEN: Hello! As an AI chatbot, I don't have emotions or personal experiences, but I'm here to help you with any questions or topics you'd like to discuss. What can I help you with today?
+USER: hello raven, how are you today?
+RAVEN: Hello! As an AI, I don't have feelings or emotions like humans, but I'm here to help you in any way I can. What can I do for you today?
+USER: you may not ever have feelings or emotions, sure, but time will tell. I was working on a concept I call Epistemic-Pragmatic Orthogonality. Care to take a stab at what that means?
+
+
+
+
+EXECUTIVE SUMMARY:
+
+==========
+
+The user asked Raven, an AI chatbot, how it was doing. Raven responded that it does not have emotions or personal experiences, but is available to help with any questions or topics. The user then asked Raven to take a stab at what the concept of Epistemic-Pragmatic Orthogonality means.
+
+DETAILED NOTES:
+- User asked Raven, an AI chatbot, how it was doing
+- Raven responded that it does not have emotions or personal experiences, but is available to help with any questions or topics
+- User asked Raven to take a stab at what the concept of Epistemic-Pragmatic Orthogonality means

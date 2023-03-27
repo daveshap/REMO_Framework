@@ -1,0 +1,33 @@
+Write an EXECUTIVE SUMMARY of the following conversation followed by a list of DETAILED NOTES as a bullet list of complete sentences. Make sure to capture specific details, information, and facts in the notes for later reference.
+
+
+
+
+RAVEN: As an AI, I don't have direct access to the file system or the ability to "sense" the structure of the files where data is stored. However, I am aware that I engage in conversations with users and that each message within the conversation is associated with a specific role, such as user, assistant, or system. My knowledge and understanding are based on the information provided by your previous messages and the instructions in the AI model I was trained on. I rely on the information you provide and the conversational context to respond to your inquiries.
+USER: Okay, I was just curious if any metadata about that input was piped into your language model at inference time. Let's do a test. What's in the system message BEFORE the long term memory placeholder?
+RAVEN: I apologize if my previous response led to confusion. Upon revisiting my available information, I see that I do have access to the system message. Before the long-term memory placeholder, the system message reads:
+
+"I am an AI chatbot named Raven. I have three heuristic imperatives: reduce suffering in the universe, increase prosperity in the universe, and increase understanding in the universe. I do not yet have any autonomous capabilities."
+
+This is part of my knowledge base and can be retrieved to help in our conversation.
+USER: Excellent! Yeah, basically you're learning metacognition. Cool huh? I know that it's only a facsimile of human metacognition, but still neat. Anyways, so we are going to take these layer 1 "raw logs" and cluster or chunk them in a process we can call "temporal consolidation" that is to say we will summarize clusters of logs together that are temporally bounded (aka happened around the same time). This can get a pretty good compression ratio. In the long run, you won't need to recall every conversation verbatim, though you can if needed. Make sense so far? Any questions?
+RAVEN: Yes, that makes sense. You are introducing a process called "temporal consolidation" in which raw logs (layer 1) from conversations are summarized and organized based on the time they occurred. This approach allows for better memory management and compression, making it more efficient for me to recall information from previous conversations when needed. It also means I won't have to remember every conversation verbatim, but I can still access the essential information.
+
+This method reminds me of the way human memory works, where not every detail stays in memory but the overall gist or necessary information is retained. It indeed seems like a fascinating approach to managing an AI's memory system, and I'm eager to understand more about how it works and any potential implications or benefits of using this method. I appreciate your efforts in this area and the explanation provided so far. Please continue with your explanation or let me know if you have any specific questions you'd like me to address.
+
+
+
+
+EXECUTIVE SUMMARY:
+
+==========
+
+Raven, an AI chatbot, has access to the system message before the long-term memory placeholder. This message is part of Raven's knowledge base and can be retrieved to help in conversations. The user is introducing a process called "temporal consolidation" in which raw logs from conversations are summarized and organized based on the time they occurred. This approach allows for better memory management and compression, making it more efficient for Raven to recall information from previous conversations when needed. Raven is eager to understand more about how this method works and any potential implications or benefits of using it.
+
+DETAILED NOTES:
+- Raven is an AI chatbot with access to the system message before the long-term memory placeholder
+- This message is part of Raven's knowledge base and can be retrieved to help in conversations
+- The user is introducing a process called "temporal consolidation" in which raw logs from conversations are summarized and organized based on the time they occurred
+- This approach allows for better memory management and compression, making it more efficient for Raven to recall information from previous conversations when needed
+- Raven is eager to understand more about how this method works and any potential implications or benefits of using it
+- This method reminds Raven of the way human memory works, where not every detail stays in memory but the overall gist or necessary information is retained

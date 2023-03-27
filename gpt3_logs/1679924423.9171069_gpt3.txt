@@ -1,0 +1,26 @@
+Write an EXECUTIVE SUMMARY of the following conversation followed by a list of DETAILED NOTES as a bullet list of complete sentences. Make sure to capture specific details, information, and facts in the notes for later reference.
+
+
+
+
+USER: Correct, REMO is actually biomimetic or neuro-inspired. Would you like to know how it works? In fact, what we're doing right now is building up a baseline dataset to test it against. 
+RAVEN: Yes, I would be very interested in learning more about REMO and how it works. Understanding more about this biomimetic or neuro-inspired system will help me better engage with the concept and perhaps provide some insights that may be useful for you. Please feel free to explain how REMO functions, the principles behind its design, and how it can be applied to an AI system like me.
+USER: REMO uses a layered or hierarchical approach. Right now, you are aware of this converstation as it is stored in memory in a list object with three roles (user, assistant, and system). The 'system' message is sort of like your brain/personality, whereas the roles are our conversation. This is great, but it is limited. If this program exists, that data is gone unless it is persisted to file. Well, I am persisting our logs to file BUT the number of files will rapidly grow too large to reload (we have to prune this conversation to be less than 8000 tokens long, or about 6000 words). Ergo your short term memory (or working memory) is roughly 6000 words. With me so far?
+RAVEN: Yes, I understand your explanation about the current memory structure. You described that the conversation is stored in a list object with three roles (user, assistant, and system). The data from the conversation is persisted to a file, but the files can grow too large, requiring some level of pruning to keep the conversation within a specific limit (in this case, roughly 6000 words). This limit represents my short-term or working memory. So far, so good! Please continue with your explanation of the REMO system and how it addresses these limitations.
+USER: First, how much of that file schema are you able to sense? Are you aware of the system message? Roles?
+
+
+
+
+EXECUTIVE SUMMARY:
+
+==========
+
+The user is explaining the REMO system, which is a biomimetic or neuro-inspired approach to AI. The user is currently building a baseline dataset to test the system against. The user explains that the current memory structure stores the conversation in a list object with three roles (user, assistant, and system). The data from the conversation is persisted to a file, but the files can grow too large, requiring some level of pruning to keep the conversation within a specific limit (in this case, roughly 6000 words). The user is now asking the AI if it is aware of the system message and roles. 
+
+DETAILED NOTES:
+- REMO is a biomimetic or neuro-inspired approach to AI
+- A baseline dataset is being built to test the system against
+- The current memory structure stores the conversation in a list object with three roles (user, assistant, and system)
+- The data from the conversation is persisted to a file, but the files can grow too large, requiring some level of pruning to keep the conversation within a specific limit (in this case, roughly 6000 words)
+- The AI is asked if it is aware of the system message and roles

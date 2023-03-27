@@ -92,7 +92,8 @@ def read_existing_summaries(folder):
 
 
 def filter_new_logs(logs, existing_files):
-    return [log for log in logs if log[0] not in existing_files]
+    #return [log for log in logs if log[0] not in existing_files]
+    return [log for log in logs if os.path.basename(log[0]) not in existing_files]    
 
 
 def chunk_logs(logs, chunk_size=5):
@@ -102,26 +103,27 @@ def chunk_logs(logs, chunk_size=5):
 def summarize_chunks(chunks):
     summaries = list()
     for chunk in chunks:
-        text = "\n".join(["{}: {}".format(log[0].split('_')[-2], log[1]) for log in chunk])
-        print('\n\nINPUT\n\n', text)
+        text = "\n".join(["{}: {}".format(log[0].split('_')[-1].replace('.txt','').upper(), log[1]) for log in chunk])
+        print('\n\n##################      INPUT\n\n', text)
         prompt = open_file('prompt_01_temporal_summary.txt').replace('<<INPUT>>', text)
         summary = gpt3_completion(prompt)
-        print('\n\nSUMMARY\n\n', summary)
+        print('\n\n##################      SUMMARY\n\n', summary)
         summaries.append((chunk, summary))
     return summaries
 
 
 def create_summary_metadata(chunk, summary, embedding):
-    start_time = chunk[0][0].split("_")[1]
-    end_time = chunk[-1][0].split("_")[1]
-    files = [log[0] for log in chunk]
+    start_time = float(chunk[0][0].split("_")[2])
+    end_time = float(chunk[-1][0].split("_")[2])
+    #files = [log[0] for log in chunk]
+    files = [os.path.basename(log[0]) for log in chunk]
 
     metadata = {
         "files": files,
         "time_start": start_time,
         "time_end": end_time,
         "summary": summary,
-        "embedding": embedding
+        "vector": embedding
     }
     return metadata
 
@@ -133,26 +135,32 @@ def save_metadata(folder, metadata):
 
 
 def main():
+    print('\n\n##################      STARTING: reading existing layer 1 logs and layer 2 summaries... skipping processed logs...')
     logs = read_chat_logs("layer1_logs")
     existing_files = read_existing_summaries("layer2_temporal")
     new_logs = filter_new_logs(logs, existing_files)
 
     if not new_logs:
-        print("No new logs to process.")
+        print("\n\n##################      No new logs to process! Exiting...")
         return
 
+    print('\n\n##################      Chunking and summarizing new logs...')
     chunks = chunk_logs(new_logs)
     summaries = summarize_chunks(chunks)
 
+    print('\n\n##################      Saving summaries... almost done')
     if not os.path.exists("layer2_temporal"):
         os.makedirs("layer2_temporal")
 
     for chunk, summary in summaries:
+        print('\n\n###### Chunk\n\n', chunk)
+        print('\n\n###### Summary\n\n', summary)
         embedding = get_embedding(summary)
+        print('\n\n###### Saving metadata....')
         metadata = create_summary_metadata(chunk, summary, embedding)
         save_metadata("layer2_temporal", metadata)
 
-    print("Processed and saved summaries to layer2_temporal folder.")
+    print("\n\n##################      Processed and saved summaries to layer2_temporal folder. All done!")
 
 
 if __name__ == "__main__":
