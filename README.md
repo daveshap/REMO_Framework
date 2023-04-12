@@ -47,6 +47,46 @@ To run REMO, you will need the following:
 - **utils.py**: Utility functions for processing, clustering, and maintaining the taxonomy.
 - **README.md**: Documentation for the REMO project.
 
+## Folder Structure and YAML Files
+
+The REMO microservice organizes conversation data into a hierarchical folder structure, with each folder representing a different taxonomical rank. Each folder contains YAML files that store the conversation data and associated metadata. Below is an overview of the folder structure and the content of the YAML files.
+
+### Folder Structure
+
+```
+REMO/
+├── L1_raw_logs/
+├── L2_message_pairs/
+├── L3_summaries/
+├── L4_summaries/
+├── ...
+```
+
+#### Description of folders
+
+- `L1_raw_logs`: This folder contains the raw conversation logs. Each YAML file in this folder represents a single message with its associated metadata.
+- `L2_message_pairs`: This folder contains message pairs, which are created by combining two consecutive raw logs. Each YAML file in this folder represents a message pair with its associated metadata and embeddings.
+- `L3_summaries`: This folder contains summaries of message pairs. Summaries are created by clustering message pairs and generating a concise representation of the cluster. The structure of this folder is similar to `L2_message_pairs`, with each YAML file representing a summary and its associated metadata and embeddings.
+- `...`: Additional taxonomical ranks can be created as needed when clustering summaries at higher levels.
+
+### YAML Files
+
+YAML files in the REMO folder structure store conversation data and associated metadata. YAML was selected because it is easily human readable for debugging and browsing. The structure of a YAML file is as follows:
+
+```yaml
+content: <conversation_content>
+speaker: <speaker_name> (only applicable for raw logs and message pairs)
+timestamp: <timestamp>
+vector: <embedding_vector>
+files: <list_of_child_files> (only applicable for message pairs and summaries at higher ranks)
+```
+
+- content: The conversation content, which can be a single message, a message pair, or a summary.
+- speaker: The name of the speaker for a single message or a message pair.
+- timestamp: The timestamp of the conversation, applicable for single messages or message pairs.
+- vector: The embedding vector generated from the conversation content, which is used for clustering and searching.
+- files: A list of child files that belong to the current summary (applicable only for summaries at higher taxonomical ranks).
+
 ## Explanation of REMO Logic
 
 REMO organizes chat logs into a hierarchical taxonomy using a combination of semantic embeddings and clustering techniques. The process can be understood through the following steps:
