@@ -10,7 +10,7 @@ from sklearn.cluster import KMeans
 import tensorflow_hub as hub
 
 
-embedding_model = hub.load("https://tfhub.dev/google/universal-sentence-encoder/5")
+embedding_model = hub.load("https://tfhub.dev/google/universal-sentence-encoder-large/5")
 
 
 def open_file(filepath):
