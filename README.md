@@ -2,21 +2,18 @@
 
 Rolling Episodic Memory Organizer (REMO) for autonomous AI systems
 
-[![Binary Search Tree with Lightning Strike](diagram.png)]
+- **REMO:** Recursive Episodic Memory Organizer. Efficient, scalable memory management. Organizes conversational data into taxonomical ranks. Each rank clusters semantically similar elements. Powerful tool for context-aware AI systems. Improves conversational capabilities, recall accuracy.
+- **Purpose:** Assist AI systems in recalling relevant information. Enhance performance, maintain context. Supports natural language queries. Returns taxonomies of memory.
+- **Structure:** Tree-like, hierarchical. Bottom rank - message pairs. Higher ranks - summaries. Embeddings via Universal Sentence Encoder v5. Clustering by cosine similarity. Message pairs utilized because smallest semantic unit with context.
+- **Functionality:** Add new messages, rebuild tree, search tree. Passive microservice, memory management autonomic. Utilizes FastAPI REST API. Handles memory in concise, efficient manner.
+
+Note: this code is still in early alpha. Testing and bugs should be expected! 
+
+![Binary Search Tree with Lightning Strike](diagram.png)
 
 ## Executive Summary 
 
 REMO (Rolling Episodic Memory Organizer) is an AI-powered microservice that organizes large volumes of text data, such as chat logs, into a hierarchical taxonomy. The taxonomy is constructed using summaries of message pairs and message clusters, allowing users to easily search and navigate through the conversation history. REMO utilizes the Universal Sentence Encoder for generating embeddings and clustering algorithms for organizing the data. The microservice is built using FastAPI, providing a simple and easy-to-use RESTful API.
-
-REMO: Recursive Episodic Memory Organizer. Efficient, scalable memory management. Organizes conversational data into taxonomical ranks. Each rank clusters semantically similar elements.
-
-Purpose: assist AI systems in recalling relevant information. Enhance performance, maintain context. Supports natural language queries. Returns taxonomies of memory.
-
-Structure: tree-like, hierarchical. Bottom rank - message pairs. Higher ranks - summaries. Embeddings via Universal Sentence Encoder v5. Clustering by cosine similarity.
-
-Functionality: add new messages, rebuild tree, search tree. Passive microservice, memory management autonomic. Utilizes FastAPI REST API. Handles memory in concise, efficient manner.
-
-REMO - powerful tool for context-aware AI systems. Improves conversational capabilities, recall accuracy.
 
 ## Requirements
 
@@ -91,10 +88,13 @@ The following example is imaginary, but serves to illustrate the value. A return
 
 > How does REMO handle salience?
 
-** Example Taxonomy:
+**Example Taxonomy:**
 
-- Rank 3: *"Discussion about REMO, a memory system for chatbots, which uses a tree-like structure for organizing and retrieving memories."*
-- Rank 2: *"Exploration of different strategies for handling salience in REMO, focusing on clustering conversational pairs and searching through tree levels."*
-- Rank 1: *"With this search tree, you can very quickly zero in on the most salient memories AND it is intrinsically organized like a web/graph so you can "walk" to nearby memories. You can even add an algorithm so the "lightning strike" will fork a few times, like "grab the top and second most salient memories" all the way down."*
+- **Rank 3:**
+  - *"Discussion about REMO, a memory system for chatbots, which uses a tree-like structure for organizing and retrieving memories."*
+- **Rank 2:**
+  - *"Exploration of different strategies for handling salience in REMO, focusing on clustering conversational pairs and searching through tree levels."*
+- **Rank 1:**
+  - *"With this search tree, you can very quickly zero in on the most salient memories AND it is intrinsically organized like a web/graph so you can "walk" to nearby memories. You can even add an algorithm so the "lightning strike" will fork a few times, like "grab the top and second most salient memories" all the way down."*
 
 You can see that the highest rank provides some context; what is REMO and what is it for? Then you can see that the taxonomy drills down into clustering strategies. Finally, the lowest rank recalls a specific line of dialog.
