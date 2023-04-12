@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 import utils
+import os
 
 app = FastAPI()
-root_folder = 'C:/raven_private/REMO'
+root_folder = os.getcwd()
 
 @app.post("/add_message")
 async def add_message(message: str, speaker: str, timestamp: float):
