@@ -10,7 +10,7 @@ from sklearn.cluster import KMeans
 import tensorflow_hub as hub
 
 
-embedding_model = hub.load("https://tfhub.dev/google/universal-sentence-encoder/5")
+embedding_model = hub.load("https://tfhub.dev/google/universal-sentence-encoder-large/5")
 
 
 def open_file(filepath):
@@ -48,13 +48,13 @@ def search_tree(root_folder, query):
     level = 6
     taxonomy = []
 
-    while level > 1:
+    while level > 2:
         level_dir = os.path.join(root_folder, f"L{level}_summaries")
         if os.path.exists(level_dir) and os.listdir(level_dir):
             break
         level -= 1
 
-    while level > 1:
+    while level > 2:
         level_files = [os.path.join(level_dir, f) for f in os.listdir(level_dir) if f.endswith(".yaml")]
         max_similarity = -1
         closest_file = None
@@ -81,11 +81,12 @@ def search_tree(root_folder, query):
     return taxonomy
 
 def rebuild_tree(root_folder: str, max_cluster_size: int = 10):
-    # Delete all folders except L1_raw_logs and L2_message_pairs
+    # Delete all folders except L1_raw_logs, L2_message_pairs and .git
     for folder_name in os.listdir(root_folder):
-        if folder_name not in {"L1_raw_logs", "L2_message_pairs"}:
+        if folder_name not in {"L1_raw_logs", "L2_message_pairs", ".git"}:
             folder_path = os.path.join(root_folder, folder_name)
-            shutil.rmtree(folder_path)
+            if os.path.isdir(folder_path):
+                shutil.rmtree(folder_path)
 
     # Process any missing messages in L1 to generate message pairs for L2
     process_missing_messages(root_folder)
@@ -150,6 +151,7 @@ def process_missing_messages(root_folder: str):
 
 def create_summaries(root_folder: str, clusters: List[List[str]], target_folder: str):
     target_folder_path = os.path.join(root_folder, target_folder)
+    l2_folder_path = os.path.join(root_folder, "L2_message_pairs")
     os.makedirs(target_folder_path, exist_ok=True)
 
     for i, cluster in enumerate(clusters):
@@ -157,7 +159,7 @@ def create_summaries(root_folder: str, clusters: List[List[str]], target_folder:
         combined_content = ""
         files = []
         for file in cluster:
-            filepath = os.path.join(root_folder, file)
+            filepath = os.path.join(l2_folder_path, file)
             data = load_yaml(filepath)
             combined_content += data["content"] + " --- "
             files.append(file)
@@ -190,7 +192,7 @@ def cluster_elements(root_folder: str, target_folder: str, max_cluster_size: int
     for file in yaml_files:
         filepath = os.path.join(folder_path, file)
         data = load_yaml(filepath)
-        vectors.append(data["vector"])
+        vectors.append(data["vector"][0])
 
     # Calculate number of clusters
     num_clusters = int(np.ceil(len(yaml_files) / max_cluster_size))
@@ -207,6 +209,10 @@ def cluster_elements(root_folder: str, target_folder: str, max_cluster_size: int
 
 def maintain_tree(root_folder: str):
     l2_message_pairs_dir = os.path.join(root_folder, "L2_message_pairs")
+    
+    # Create L2 directory if it does not exist
+    if not os.path.exists(l2_message_pairs_dir):
+        os.makedirs(l2_message_pairs_dir)
     
     # Get list of files in L2 before processing missing messages
     l2_files_before = set(os.listdir(l2_message_pairs_dir))
@@ -226,6 +232,10 @@ def maintain_tree(root_folder: str):
 
 def integrate_new_elements(root_folder: str, target_folder: str, new_elements: List[str], threshold: float):
     target_dir = os.path.join(root_folder, target_folder)
+    
+    # Create target directory if it does not exist
+    if not os.path.exists(target_dir):
+        os.makedirs(target_dir)
     
     for new_element in new_elements:
         new_element_path = os.path.join(root_folder, "L2_message_pairs", new_element)
