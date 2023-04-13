@@ -4,11 +4,15 @@ import os
 
 app = FastAPI()
 root_folder = os.getcwd()
+#root_folder = 'C:/raven_private/REMO/'
+# REMO = Rolling Episodic Memory Organizer
+cluster_size = 5
 
 @app.post("/add_message")
 async def add_message(message: str, speaker: str, timestamp: float):
     # Add message to REMO
     new_message = utils.create_message(message, speaker, timestamp)
+    print('\n\nADD MESSAGE -', new_message)
     utils.save_message(root_folder, new_message)
 
     return {"detail": "Message added"}
@@ -16,6 +20,7 @@ async def add_message(message: str, speaker: str, timestamp: float):
 @app.get("/search")
 async def search(query: str):
     # Search the tree for relevant nodes
+    print('\n\nSEARCH -', query)
     taxonomy = utils.search_tree(root_folder, query)
 
     return {"results": taxonomy}
@@ -23,13 +28,15 @@ async def search(query: str):
 @app.post("/rebuild_tree")
 async def rebuild_tree():
     # Trigger full tree rebuilding event
-    utils.rebuild_tree(root_folder, 10)
+    print('\n\nREBUILD TREE')
+    utils.rebuild_tree(root_folder, cluster_size)
 
     return {"detail": "Tree rebuilding completed"}
 
 @app.post("/maintain_tree")
 async def maintain_tree():
     # Trigger tree maintenance event
+    print('\n\nMAINTAIN TREE')
     utils.maintain_tree(root_folder)
 
     return {"detail": "Tree maintenance completed"}

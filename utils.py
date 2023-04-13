@@ -80,6 +80,7 @@ def search_tree(root_folder, query):
 
     return taxonomy
 
+
 def rebuild_tree(root_folder: str, max_cluster_size: int = 10):
     # Delete all folders except L1_raw_logs, L2_message_pairs and .git
     for folder_name in os.listdir(root_folder):
@@ -88,6 +89,11 @@ def rebuild_tree(root_folder: str, max_cluster_size: int = 10):
             if os.path.isdir(folder_path):
                 shutil.rmtree(folder_path)
 
+    # Create L2 directory if it does not exist
+    l2_message_pairs_dir = os.path.join(root_folder, "L2_message_pairs")
+    if not os.path.exists(l2_message_pairs_dir):
+        os.makedirs(l2_message_pairs_dir)
+
     # Process any missing messages in L1 to generate message pairs for L2
     process_missing_messages(root_folder)
 
@@ -95,17 +101,22 @@ def rebuild_tree(root_folder: str, max_cluster_size: int = 10):
     clusters = cluster_elements(root_folder, "L2_message_pairs", max_cluster_size)
 
     # Create summaries and save them in the next rank (L3_summaries)
-    create_summaries(root_folder, clusters, "L3_summaries")
+    create_summaries(root_folder, clusters, f"L3_summaries", "L2_message_pairs")
 
-    # If top rank (e.g. L3_summaries) has > 10 files, repeat process, creating new taxonomical ranks
+    # If top rank (e.g. L3_summaries) has > max_cluster_size files, repeat process, creating new taxonomical ranks
     current_rank = 3
     while True:
+        # calculate clusters at new rank
         clusters = cluster_elements(root_folder, f"L{current_rank}_summaries", max_cluster_size)
+        
+        # summarize those clusters
+        create_summaries(root_folder, clusters, f"L{current_rank + 1}_summaries", f"L{current_rank}_summaries")
+        current_rank += 1
+        
+        # if clusters less than max cluster size, we are done :) 
         if len(clusters) <= max_cluster_size:
             break
 
-        create_summaries(root_folder, clusters, f"L{current_rank + 1}_summaries")
-        current_rank += 1
 
 def process_missing_messages(root_folder: str):
     raw_logs_dir = os.path.join(root_folder, "L1_raw_logs")
@@ -115,7 +126,7 @@ def process_missing_messages(root_folder: str):
     processed_messages = set(os.listdir(message_pairs_dir))
 
     # Sort raw log files by timestamp
-    raw_log_files = sorted(os.listdir(raw_logs_dir), key=lambda x: float(x.split('_')[1]))
+    raw_log_files = os.listdir(raw_logs_dir)
 
     for i in range(len(raw_log_files) - 1):
         file1_path = os.path.join(raw_logs_dir, raw_log_files[i])
@@ -149,9 +160,9 @@ def process_missing_messages(root_folder: str):
         message_pair_path = os.path.join(message_pairs_dir, message_pair_filename)
         save_yaml(message_pair_path, message_pair_data)
 
-def create_summaries(root_folder: str, clusters: List[List[str]], target_folder: str):
+def create_summaries(root_folder: str, clusters: List[List[str]], target_folder: str, source_folder: str):
+    source_folder_path = os.path.join(root_folder, source_folder)
     target_folder_path = os.path.join(root_folder, target_folder)
-    l2_folder_path = os.path.join(root_folder, "L2_message_pairs")
     os.makedirs(target_folder_path, exist_ok=True)
 
     for i, cluster in enumerate(clusters):
@@ -159,10 +170,10 @@ def create_summaries(root_folder: str, clusters: List[List[str]], target_folder:
         combined_content = ""
         files = []
         for file in cluster:
-            filepath = os.path.join(l2_folder_path, file)
+            filepath = os.path.join(source_folder_path, file)
             data = load_yaml(filepath)
-            combined_content += data["content"] + " --- "
-            files.append(file)
+            combined_content += data["content"] + " \n---\n "
+            files.append(filepath)
 
         # Generate summary with LLM
         summary = quick_summarize(combined_content)
@@ -178,7 +189,8 @@ def create_summaries(root_folder: str, clusters: List[List[str]], target_folder:
             "timestamp": time()
         }
 
-        summary_filename = f"summary_{i}.yaml"
+        timestamp = time()
+        summary_filename = f"summary_{i}_{timestamp}.yaml"
         summary_filepath = os.path.join(target_folder_path, summary_filename)
         save_yaml(summary_filepath, summary_data)
 
