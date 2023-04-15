@@ -38,10 +38,10 @@ To run REMO, you will need the following:
 
 ## API Endpoints
 
-- **POST /add_message**: Add a new message to REMO.
-- **GET /search**: Search the taxonomy for relevant nodes.
-- **POST /rebuild_tree**: Trigger a full tree rebuilding event.
-- **POST /maintain_tree**: Trigger a tree maintenance event.
+- **POST /add_message**: Add a new message to REMO. Speaker, timestamp, and content required.
+- **GET /search**: Search the taxonomy for relevant nodes. Query can be any string, such as messages, context, or whatever you want.
+- **POST /rebuild_tree**: Trigger a full tree rebuilding event. This deletes everything above L2_message_pairs and regenerates all clusters.
+- **POST /maintain_tree**: Trigger a tree maintenance event. This attempts to fit the most recent message pairs into the current tree structure, or create new nodes.
 
 ## File Structure
 
