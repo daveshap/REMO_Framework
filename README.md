@@ -9,6 +9,8 @@ Rolling Episodic Memory Organizer (REMO) for autonomous AI systems
 
 Note: this code is still in early alpha. Testing and bugs should be expected! 
 
+EDIT: Someone implemented REMO with LangFlow: https://github.com/hunter-meloche/REMO-langflow 
+
 ![Binary Search Tree with Lightning Strike](diagram.png)
 
 ## Executive Summary 
