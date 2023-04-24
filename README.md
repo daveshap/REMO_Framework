@@ -29,12 +29,17 @@ To run REMO, you will need the following:
 - openai
 - PyYAML
 
+## Installation
+
+Note: You may need to change tensorflow to tensowflow-macos in your requirements.txt file on certain OS X machines.
+
+1. Run `pip install -r requirements.txt`
+2. Create key_openai.txt file and put your OpenAI API key inside.
 
 ## Usage
 
 1. Start the FastAPI server: `uvicorn remo:app --reload`
 2. Interact with the API using a REST client or web browser: `http://localhost:8000`
-
 
 ## API Endpoints
 
