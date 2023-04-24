@@ -93,7 +93,7 @@ def search_tree(root_folder, query):
 def rebuild_tree(root_folder: str, max_cluster_size: int = 10):
     # Delete all folders except L1_raw_logs, L2_message_pairs and .git
     for folder_name in os.listdir(root_folder):
-        if folder_name not in {"L1_raw_logs", "L2_message_pairs", ".git"}:
+        if folder_name not in {"L1_raw_logs", "L2_message_pairs", ".git", "client"}:
             folder_path = os.path.join(root_folder, folder_name)
             if os.path.isdir(folder_path):
                 shutil.rmtree(folder_path)
