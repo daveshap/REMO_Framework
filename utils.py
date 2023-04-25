@@ -1,4 +1,6 @@
 import os
+import re
+
 import yaml
 import shutil
 import openai
@@ -8,6 +10,11 @@ from typing import Dict, Any, List
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.cluster import KMeans
 import tensorflow_hub as hub
+
+
+SUMMARIES_FOLDER_REGEX = (
+    r"L\d+_summaries"
+)
 
 
 embedding_model = hub.load("https://tfhub.dev/google/universal-sentence-encoder-large/5")
@@ -84,7 +91,16 @@ def search_tree(root_folder, query):
 def rebuild_tree(root_folder: str, max_cluster_size: int = 10):
     # Delete all folders except L1_raw_logs, L2_message_pairs and .git
     for folder_name in os.listdir(root_folder):
-        if folder_name not in {"L1_raw_logs", "L2_message_pairs", ".git"}:
+        
+        is_folder_to_delete = (
+            folder_name not in {"L1_raw_logs", "L2_message_pairs", ".git"}
+            and re.match(
+                SUMMARIES_FOLDER_REGEX,
+                folder_name,
+            )
+        )
+        
+        if is_folder_to_delete:
             folder_path = os.path.join(root_folder, folder_name)
             if os.path.isdir(folder_path):
                 shutil.rmtree(folder_path)
