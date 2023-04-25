@@ -48,4 +48,8 @@ var/
 # pytest
 *pytest_cache
 
+# Credentials
 key_openai.txt
+
+# Models saved locally
+models/

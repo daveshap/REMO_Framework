@@ -1,4 +1,6 @@
 import os
+from pathlib import Path
+
 import yaml
 import shutil
 import openai
@@ -7,12 +9,24 @@ from time import time, sleep
 from typing import Dict, Any, List
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.cluster import KMeans
+import tensorflow as tf
 import tensorflow_hub as hub
 
 
-embedding_model = hub.load(
-    "https://tfhub.dev/google/universal-sentence-encoder-large/5"
-)
+ARE_YOU_TESTING__LOAD_MODEL_LOCAL = True
+
+ROOT_REPO_PATH = Path().parent.absolute()
+
+if ARE_YOU_TESTING__LOAD_MODEL_LOCAL:
+    embedding_model = tf.saved_model.load(
+        ROOT_REPO_PATH
+        / "models/universal-sentence-encoder-large_5"
+    )
+
+else:
+    embedding_model = hub.load(
+        "https://tfhub.dev/google/universal-sentence-encoder-large/5"
+    )
 
 
 def open_file(filepath):
