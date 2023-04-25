@@ -36,6 +36,50 @@ To run REMO, you will need the following:
 2. Interact with the API using a REST client or web browser: `http://localhost:8000`
 
 
+## Models
+
+### Embedding Model
+
+REMO currently uses the
+Universal Sentence Encoder v5 for generating embeddings.
+
+#### Loading from TensorFlow Hub
+
+This is the default option.
+
+When 
+
+```python
+ARE_YOU_TESTING__LOAD_MODEL_LOCAL = False
+```
+
+in file `utils.py`, the model is loaded from TensorFlow Hub.
+
+#### Loading from a local file
+
+Downloading the model from TensorFlow Hub every time you need to spin up
+the microservice would be expensive and time-consuming.
+
+1. Download the `.tar.gz` file from
+   TensorFlow Hub: https://tfhub.dev/google/universal-sentence-encoder-large/5
+
+   ![img.png](docs/images/embedding_local_1.png)
+
+2. Extract the file to the folder
+   ```
+   models/universal-sentence-encoder-large_5/
+   ```
+   with
+   ```shell
+   tar -xvzf universal-sentence-encoder-large_5.tar.gz
+   ```
+
+3. Set
+   ```python
+   ARE_YOU_TESTING__LOAD_MODEL_LOCAL = True
+   ```
+   in file `utils.py`.
+
 ## API Endpoints
 
 - **POST /add_message**: Add a new message to REMO. Speaker, timestamp, and content required.
