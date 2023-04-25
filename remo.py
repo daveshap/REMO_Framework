@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 import utils
 import os
+import uvicorn
 
 app = FastAPI()
 root_folder = os.getcwd()
@@ -48,3 +49,7 @@ async def maintain_tree():
     utils.maintain_tree(root_folder)
 
     return {"detail": "Tree maintenance completed"}
+
+
+if __name__ == '__main__':
+    uvicorn.run(app, host='0.0.0.0', port=8000)
